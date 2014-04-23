@@ -1,0 +1,115 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{epic}
+\usepackage[francais]{babel}
+\usepackage{a4}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[pdftex]{graphicx}
+\usepackage[a4paper]{geometry}
+\geometry{hscale=0.85,vscale=0.85,centering}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\usepackage{mathrsfs}
+\usepackage{multicol}
+\usepackage{verbatim}
+\usepackage{varioref}
+
+ % pour la coloration syntaxique
+\usepackage{lmodern}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{listings}
+\lstloadlanguages{Python}
+\lstnewenvironment{code-python}[1][]{
+	\lstset{
+		upquote=true,
+		frame=single,
+		rulecolor=\color{green!10},
+		backgroundcolor=\color{green!10},
+		columns=flexible,
+		basicstyle=\ttfamily,
+		language={Python},
+		keywordstyle=\color{blue},
+		commentstyle=\color{gray},
+		morekeywords={abslabeldelim,setlength,abstitleskip},
+		#1
+	}
+}{}
+
+\newtheorem*{idea}{Idée}
+\newtheorem*{exper}{Expérience}
+\newtheorem*{hypo}{Hypothèse}
+\newtheorem*{theory}{Théorie}
+
+\renewcommand\thesection{\Roman{section}}
+
+% pour le filigrane
+%\usepackage{eso-pic,xcolor}
+%\AddToShipoutPicture{
+%	\unitlength=1cm
+%	\put(1.5,1.5)
+%	{\rotatebox{60}{\textcolor{pink}{\fontsize{100}{100} \bfseries CONFIDENTIEL}}}
+%}
+
+\begin{document}
+
+\title{
+%\includegraphics[width=5cm]{/home/ibis/ngiordan/Pictures/logo-ibis-lab-app.pdf}\\
+%	\bigskip
+	Régulation de la croissance chez \textit{Escherichia coli} : étude théorique et expérimentale de modèles coûts-bénéfices de la régulation génique.}
+\author{Nils Giordano}
+\date{Projet de thèse IBIS - LAPM\\
+    \today}
+
+\maketitle
+
+\section*{Résumé}
+
+Le contrôle de la croissance est un mécanisme fondamental de la physiologie bactérienne. Il s'appuie sur des mécanismes qui assurent la bonne répartition des ressources de la bactérie. Ces ressources sont principalement la matière première (nutriments) à partir de laquelle elle tire énergie et précurseurs, et la disponibilité de sa machinerie cellulaire (polymérases, ribosomes) qui assure la synthèse de toutes les biomolécules nécessaires au fonctionnement de l'organisme. Bien que de natures différentes, ces deux ressources ne sont pas indépendentes et sont utilisées conjointement dans la mise en œuvre de toutes les fonctions cellulaires. Un taux de croissance optimal va donc demander une régulation fine de leur production et de leur utilisation.
+
+Des études à l'état stationnaire basées sur des modèles coûts-bénéfices ont montré l'importance d'une bonne optimisation de la répartition des nutriments, et comment cette dernière pouvait permettre de comprendre des comportements jusque là difficilement expliquables \cite{Molenaar09,Goelzer11}. D'autres, au contraire, montrent expérimentalement que la machinerie est limitante lors des premières phases d'un redémarrage de la croissance \cite{Stoebel08,Shachrai10}, relayant l'optimisation énergétique au second plan. On manque toujours à l'heure actuelle d'une compréhension globale et équivoque de l'importance de ces deux ressources dans la réplication d'un micro-organisme.
+
+Les progrès récents en matière de mesures dynamiques de l'expression génique au moyen de gènes rapporteurs permettent d'appréhender cette question. C'est ainsi que l'équipe a pu mettre en évidence pour une grande diversité de protéines, l'existence d'une surproduction transitoire lors des premières générations suivant un redémarrage brusque de la croissance \cite{ropers}. Ce qui ressemblerait à un gaspillage d'énergie pourrait prendre tout son sens dans le contexte d'une double optimisation des deux formes de ressources sus-citées. Le projet s'attachera à expliquer cette surproduction au moyen de modèles coûts-bénéfices appliqués à des données dynamiques de reprise de croissance. Ces données issues de mesures en lecteur de plaques seront complétées d'expériences en bioréacteur voire en dispositif microfluidique, dont la finesse des contrôles et mesures possibles seront un atout majeur dans cette étude.
+
+\bibliographystyle{unsrt}
+\bibliography{biblio_subject}
+
+
+%De part leur nature, les organismes unicellulaires font face à un environnement changeant. L'adaptation rapide à différentes conditions du milieu est donc un facteur de sélection très fort au sein des communautés microbiennes. Elles ajustent sans cesse leur métabolisme aux ressources disponibles, cette plasticité étant sous le contrôle de larges réseaux génétiques. Ainsi, lorsqu'elle fait face à un apport brusque de nutriments, la réponse optimale d'une bactérie passera nécessairement par une bonne répartition de ses ressources dans les différents sous-systèmes qui la composent : une machinerie qui permet l'expression du génome et la production de protéines (polymérases, ribosomes…) et du métabolisme qui permet l'acquisition et la conversion des ressources en énergie et précurseurs utilisables (glycolyse, cycle de Krebs…).
+%
+%On peut distinguer 2 types de ressources : de la matière première tirée du milieu et convertie sous forme d'énergie / précurseurs, et la disponibilité d'une machinerie s'auto-réplicant et permettant la synthèse en amont de tous les composants de la bactérie.
+%
+%Des études basées sur des modèles de croissance à l'état stationnaire ont montré l'importance de l'optimisation de cette répartition d'un point de vue dynamique. D'autres études réalisées en dynamique ont cependant souligné l'importance de la disponibilité de la machinerie pour l'atteinte de cet état stationnaire.
+%
+%La croissance est une propriété fondamentale du vivant que nous connaissons, et un facteur de sélection majeur des organismes unicellulaires (ref) chez lesquels on peut montrer une forte optimisation de la génération de biomasse (ref). Elle se base sur des phénomènes de prise et de conversion des ressources — que l'on regroupe sous le terme de métabolisme — sujets à des régulations parfois complexes. La plupart des études actuelles reposent sur des modèles à l'échelle du génome entier qui exploitent la masse de données génétiques et biochimiques acquise au cours des dernières décennies (« genome-scale models of metabolic networks »). L'analyse par équilibre des flux (« flux balance analysis ») en est un outil phare, avec des succès aussi bien dans la compréhension des flux métaboliques que dans leur prédiction (ref ref ref). Cependant ces approches ignorent de nombreux aspects de la physiologie cellulaire, notamment le coût de chaque noeud du réseau en terme de production de la protéine correspondante. Les phénomènes de régulation évoqués plus haut peuvent par exemple nécessité la synthèse de régulateurs, drainant inéluctablement une partie des ressources disponibles. Ces investissements à plus ou moins long terme dont le bénéfice, pas toujours immédiat, dépend souvent des conditions environnementales, sont pourtant remarquablement conservés chez les unicellulaires, y compris pour des souches d'\textit{Escherichia coli} soumises depuis longtemps à des conditions optimales de croissance.
+%
+%Comment s'organise le compromis entre le coût d'une régulation et les bénéfices qu'en tire l'organisme ? Teusink et al. ont montré que ce genre de problématiques pouvaient s'étudier via l'utilisation de modèles d'auto-réplicateur. Ce type de modèle très abstrait tente de capturer l'essence des phénomènes étudiés en réduisant au maximum les détails biochimiques, facilitant ainsi leur compréhension en terme de système.
+%
+%Le projet s'appuyera au départ sur un modèle simple d'auto-réplicateur cloisonné comprenant (voir Fig. \ref{model_noreg})  : une {\color{blue}machinerie cellulaire} (Ribosomes, polymérases…) s'autoréplicant à partir de {\color{OliveGreen}précurseurs} et nécessaire à la biosynthèse. Ces derniers sont issus de la conversion d'un {\color{OliveGreen}substrat} via des enzymes du {\color{red}métabolisme}. Enfin, l'organisme étant cloisonné, le substrat est incorporé dans le milieu intérieur via un {\color{red}transporteur}. Ce modèle peut déjà modéliser la croissance sur une source de carbone d'un organisme unicellulaire, durant laquelle il partage ses ressources entre les enzymes permettant leur acquisition (transport, métabolisme) et la formation de biomasse (machinerie).
+%
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=0.6\textwidth]{model_noreg.pdf}
+%\caption{Modèle d'un auto-réplicateur cloisonné}
+%\label{model_noreg}
+%\end{figure}
+%
+%% Ici paragraphe sur les équations, montrer le problème quand faible quantité de nutriments ?
+%
+%On ajoute à ce modèle une autre caractéristique fondamentale de l'organisme : la {\color{red}régulation} (voir Fig. \ref{model_reg}). On prend désormais en compte la synthèse d'un régulateur qui va ajuster la synthèse de transporteurs à la quantité de nutriments disponibles dans le milieu. Quels bénéfices la bactérie va tirer d'une telle régulation, dans quelles conditions, et peut-on en trouver dans lesquelles elle est délétère ? Ces questions sont en cours d'étude…
+%
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=0.6\textwidth]{model_reg.pdf}
+%\caption{Modèle d'un auto-réplicateur cloisonné avec régulation de la quantité de transporteurs}
+%\label{model_reg}
+%\end{figure}
+
+% synthèse d'une dummy protéine, knock out de la régulation
+
+\end{document}

@@ -1,0 +1,223 @@
+\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
+\IEEEoverridecommandlockouts                              % This command is only needed if 
+                                                          % you want to use the \thanks command
+\overrideIEEEmargins                                      % Needed to meet printer requirements.
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{hscale=0.85,vscale=0.85,centering}
+\usepackage[pdftex]{graphicx}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+%\usepackage{amsthm}
+\usepackage{color}
+
+\newtheorem{theorem}{Theorem}
+\newcommand{\tr}[1]{\textcolor{red}{#1}}
+
+\title{\LARGE \bf
+Dynamic optimisation of resource allocation in microorganisms (extended abstract)
+}
+
+\author{Nils Giordano$^{1,2}$, Francis Mairet$^{3}$, Jean-Luc Gouzé$^{3}$, Johannes Geiselmann$^{1,2}$, Hidde de Jong$^{2}$*% <-this % stops a space
+\thanks{*Corresponding author: hidde.de-jong@inria.fr}% <-this % stops a space
+\thanks{$^{1}$Laboratoire Adaptation et Pathog\'enie des Microorganismes (CNRS UMR 5163),
+Universit\'e Joseph Fourier,
+La Tronche, France}
+\thanks{$^{2}$Inria Grenoble--Rh\^one-Alpes, Montbonnot, 38334 Saint-Ismier Cedex, France}
+\thanks{$^{3}$Inria Sophia Antipolis M\'editerran\'ee, 06902 Sophia Antipolis, France}
+}
+
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+
+Bacterial growth is a fundamental process in which cells sustain and reproduce themselves from available matter and energy.
+Optimisation principles have been widely used to explain and predict the growth behaviour of microorganisms, assumed to be optimized by evolution.
+This has given rise, among other things, to bacterial growth laws describing how the abundance of components of the gene expression machinery increases with the growth rate. These studies have mainly focused on the situation where the system is in balanced growth, a steady state in which all cell components grow at the same rate.
+Balanced-growth conditions, however, are far from natural growth conditions in which the environment is continually changing.
+We focus on the optimal allocation of resources between the gene expression machinery and other subsystems during growth-phase transitions.
+We describe an abstract model of the biochemical reaction processes occurring in the cell, based on first principles and articulated around two subsystems: the gene expression machinery and the uptake of nutrients from the environment.
+Using this so-called self-replicator model, we investigate the optimal dynamic reallocation of resources following a rapid change in the environment.
+We formulate our question as an optimal control problem that can be solved using Pontryagin's maximum principle.
+Preliminary results have shown the predominance of bang-singular control of resource allocation following abrupt environmental transitions.
+\end{abstract}
+
+% introduction
+One of the fundamental properties of life is the maintenance and replication of cells from available matter and energy.
+Microorganisms are excellent models for the study of this autopoetic process, as they undergo a strong selective pressure for growth.
+Extensive quantitative studies in bacterial physiology have allowed the identification of several key concepts, like the growth-rate dependence of the cell composition (DNA, RNA, protein, ...) and the key role of the gene expression machinery in controlling growth \cite{scott_interdependence_2010,bremer_modulation_1996,bookMaloe} {\color{blue} CITATION bookMaloe ???}.
+This has contributed to the development of empirical bacterial growth laws, reviewed in \cite{scott_bacterial_2011}.
+
+Optimisation theory is important for understanding how these laws arise from evolution and physical constraints on living matter.
+Indeed, it is widely accepted that microorganisms are mostly optimised for growth \cite{dekel_optimality_2005}.
+As a consequence, much theoretical work on bacterial growth has been based on optimisation principles, with several successes at the metabolic, genetic or global cell level \cite{edwards_escherichia_2000, molenaar_shifts_2009}.
+
+These studies generally focus on balanced growth of a bacterial population, that is, a steady state in which all cell components grow at the same rate \cite{neidhardt_physiology_1990}.
+Balanced growth is a convenient condition to study growth, since it is experimentally reproducible and leads to mathematically simple models.
+However, the constant environmental conditions necessary for balanced growth are easy to simulate in the laboratory, but hard to find in nature \cite{neidhardt_physiology_1990}.
+In most situations bacterial cells have to continually adapt their growth rate and their composition, notably the sets of expressed proteins (proteome), to changes in the environment, such as the availability of nutrients. 
+
+Despite the large amount of work on bacterial growth, as stated in a recent study "little is known about the dynamics of proteome change, e.g., whether bacteria use optimal strategies of gene expression for rapid proteome adjustments..." \cite{pavlov_optimal_2013}.
+This study and other recent work \cite{ehrenberg_medium-dependent_2013} have argued that it is important to consider optimisation principles from a dynamic perspective when studying bacterial growth.
+In this contribution, we extend these ideas by focusing on the dynamics of a key proteome component, the gene expression machinery.
+More precisely, our aim is to study the optimal allocation of resources to the gene expression machinery and to the uptake of nutrients from the environment during growth-phase transitions of a bacterial population, using tools from optimal control theory.
+
+% model description
+In order to model bacterial growth and relate it to the environment and the molecular composition of the cell, we use the self-replicator model introduced by Molenaar and colleagues \cite{molenaar_shifts_2009}.
+This abstract model, built from first principles, articulates self-replication around the gene expression machinery R and the metabolic machinery M (Figure \ref{fig::selfrep}). While M converts substrate S from the environment into precursors P, R transforms these precursors into macromolecules, including the transporters and enzymes in M and the RNA polymerases and ribosomes in R.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.45\textwidth]{../../Fig/model_dec2013_baw.pdf}
+\caption{\textbf{Self-replicator model.} S, P, M, and R refer to substrate, precursors, metabolic machinery and gene expression machinery, respectively.
+$V_M$ and $V_R$ are reaction rates.
+$\alpha(t)$ is the gene regulation control variable.}
+\label{fig::selfrep}
+\end{figure}
+
+The self-replicator system is described by the following two reactions:
+\begin{eqnarray*}
+S  &\overset{V_M}{\longrightarrow}& P \\
+nP &\overset{V_R}{\longrightarrow}& \alpha R + (1-\alpha) M
+\end{eqnarray*}
+The variables $P$, $R$, and $M$ refer to the amount of precursors, gene expression machinery and metabolic machinery expressed in mole.
+The parameters $n$ and $\alpha$, with $n \gg 1$ and $\alpha \in [0,1]$, represent the reaction stoichiometry.
+$n$ moles of precursor metabolites are necessary for the production of 1 mole of macromolecules, consisting of metabolic enzymes and components of the gene expression machinery in the proportions $\alpha$ and $1 - \alpha$, respectively.
+The rates of the reactions are $V_M$ and $V_R$ , expressed in mole min$^{-1}$.
+The following stoichiometry model can thus be written for the dynamics of the reaction system:
+\begin{equation}
+\frac{d}{dt} \left[
+\begin{matrix}
+P\\
+M\\
+R
+\end{matrix}
+\right] = \left[
+\begin{matrix}
+1 &-n\\
+0 & 1 - \alpha\\
+0 & \alpha
+\end{matrix}
+\right] \cdot \left[
+\begin{matrix}
+V_M \\ V_R
+\end{matrix}
+\right] = N\cdot V,
+\end{equation}
+where $N$ is the stoichiometric matrix. $N$ has rank 2.
+
+Considering cell volume as proportional to the quantity of macromolecules, the total cell volume $Vol$ is defined as follow:
+\[
+\mathit{Vol}=\beta\cdot(M+R),
+\]
+with $\beta$ a conversion constant. Note that $P$, $M$, $R$ and $\mathit{Vol}$ are extensive variables.
+The growth rate of the population is given by:
+\[
+\mu = \frac{1}{\mathit{Vol}} \frac{d\mathit{Vol}}{dt} = \frac{1}{M+R}\frac{d(M+R)}{dt}.
+\]
+
+To simplify this model and introduce realistic expressions for the reaction rates, we introduce the following intensive variables:
+\begin{eqnarray*}
+p &= \dfrac{P}{\mathit{Vol}} &= \frac{P}{\beta (M+R)}, \\
+m &= \dfrac{M}{\mathit{Vol}} &= \frac{M}{\beta (M+R)},\\
+r &= \dfrac{N}{\mathit{Vol}} &= \frac{R}{\beta (M+R)},\\
+v_M &= \dfrac{V_M}{\mathit{Vol}} &= \frac{V_M}{\beta (M+R)},\\
+v_R &= \dfrac{V_R}{\mathit{Vol}} &= \frac{V_R}{\beta (M+R)}.
+\end{eqnarray*}
+$p,r,m$ are molar concentrations, for example expressed in mole m$^{-3}$ or mole L$^{-1}$. Notice that, by definition, $0 \leq r, p \leq 1/\beta$. When expressing the growth rate in terms of the new variables, we have:
+\[
+\mu = \frac{V_2}{R+M} = \beta v_R.
+\]
+The systems now writes:
+\begin{eqnarray}
+\frac{dp}{dt} &=& v_M - (n + \beta p) v_R, \label{eq:p} \\
+\frac{dm}{dt} &=& (1-\alpha - \beta m) v_R, \label{eq:m} \\ 
+\frac{dr}{dt} &=& (\alpha - \beta r) v_R. \label{eq:r}
+\end{eqnarray}
+Note that $m = (1/\beta - r)$ and $dm/dt = - dr/dt$, so we the variables $p$ and $r$ are sufficient to define the dynamics of the system.
+
+Finally, we use Michaelis-Menten kinetics for the rates of the two reactions, the uptake and conversion of substrates and the synthesis of components of the gene expression machinery:
+\begin{eqnarray}
+&v_M &= k_M \frac{s}{K_M +s} \cdot m = e_M \cdot (1/\beta -r), \\
+&v_R &= k_R \frac{p}{K_R + p} \cdot r,
+\end{eqnarray}
+with rate constants $k_M, k_R$ and half-saturation constant $K_M, K_R$.
+$s$ is the substrate concentration in the environment.
+Since $s$ is not a system variable, we define the parameter $e_M = k_M s / (K_M + s)$ representing the nutrient richness of the environment.
+{\color{blue} I CHANGED SEVERAL THINGS ABOVE, CHECK IF OK}
+For a constant gene regulation $\alpha$, the growth rate $\mu(p,r,\alpha)$ goes to a steady-state value $\mu^*(p^*, r^*, \alpha)$. 
+One can easily prove that $\mu^*$ admits one maximum for a value $\alpha = \alpha_{opt} \in [0,1]$, corresponding to a steady-state at $p^* = p_{opt}$ and $r^* = r_{opt} = \alpha_{opt}/ \beta$. {\color{blue} AT STEADY STATE dr/dt = 0 so $\alpha - \beta r = 0$ and so $r = \alpha / \beta$ WHICH IS ALSO TRUE AT THE OPTIMAL $\alpha$. I THINK IT'S OK}
+Our goal is to investigate the reallocation of resources following a rapid change in the environment at time $t=0$.
+In other words, what is the best strategy if, starting from values of $p$ and $r$ that are non-optimal in the new environment, we allow $\alpha = \alpha(t)$ to vary over time, with $t\geq 0$ and $\alpha \in [0, 1]$, so as to maximize biomass production? 
+
+% optimal control problem
+We formulate our question as an optimal control problem, with the gene expression variable $\alpha(t)$ as the control parameter.
+The objective of this study is to maximize the growth rate $\mu(p,r, \alpha, t)$ on an infinite time interval $[0, +\infty)$.
+Consider the set of admissible controls
+\[
+\mathcal{U}=\{\alpha:\mathbb{R}^+ \rightarrow [0,1] \ | \ \mathrm{meas.} \tr{???? }\}.
+\]
+\tr{I DID NOT UNDERSTAND THE MEANING OF meas. MAKE THIS MATHEMATICALLY PRECISE}
+{\color{blue} ACTUALLY I DO NOT UNDERSTAND EITHER... THAT WAS IN FRANCIS' PROOF SO I KEPT IT. FOR ME THE SET OF ADMISSIBLE CONTROL IS JUST ALL FUNCTION $\mathbb{R}^+ \rightarrow [0,1]$}
+The optimization problem can then be stated as follows:
+\begin{equation}\label{Prob}
+\max_{\alpha \in \mathcal{U}} J(\alpha):=\int_0^{+\infty} \mu(p, r, \alpha, t) dt,
+\end{equation}
+where $J(\alpha)$ represents the biomass (or volume) produced for a given control $\alpha\in \mathcal{U}$.
+Note that since the integral in $J(\alpha)$ diverges, we have to adapt the maximisation criterion.
+We use the criterion described in \cite{halkin_necessary_1974}, which allows the application of Pontryagin maximum principle as in finite horizon optimal control problems.
+
+Preliminary results, based on a quasi-steady-state assumption for the model \eqref{eq:p}-\eqref{eq:r}, indicate that the optimal strategy minimizes the time spent far from $\mu_{opt}$ by producing the limiting component.
+{\color{blue} I CHANGED STUFF BELOW, CHECK IF OK}
+For example, if the system has too much metabolic machinery $M$ and not enough gene expression machinery $R$ ($r < r_{opt}$), $\alpha$ is maximized so as only $R$ is produced until $r = r_{opt}$.
+This is intuitively expected and was previously found in other, similar problems \cite{berg_optimal_1998, berg_optimal_2002, pavlov_optimal_2013}. In our case, the complete optimal strategy is the following:
+\begin{equation}
+\alpha(t) = 
+\begin{cases}
+1 \; \text{if} \;\; r(t)<r_{opt},\\
+0 \; \text{if} \;\; r(t)>r_{opt},\\
+\beta r_{opt} \; \text{if} \;\; r(t)=r_{opt},
+\end{cases}
+\label{optstrat}
+\end{equation}
+a strategy usually called bang-singular control in optimal control theory \cite{bryson_applied_1975}. 
+
+Figure~\ref{fig::simul} illustrates the optimal solution for a nutrient upshift experienced by a bacterial population. The bang-singular solution drives the gene expression machinery abundance $r$ faster to the target value $r_{opt}$. The singular-only solution, which consists into a constant $\alpha = r_{opt}$, eventually reaches the optimal steady-state growth rate but in a time 10-fold higher. Formally, this solution
+{\color{blue} AS ASKED I ADDED THE PARAGRAPH ABOVE}
+
+\begin{figure*}[h!]
+\centering
+\includegraphics[width=0.9\textwidth]{../../Fig/extabs_bangsingularcontrol.pdf}
+\caption{\textbf{Bang-singular versus singular control strategies.}
+Bang-singular control drives the gene expression machinery abundance $r$ faster to the optimal value $r_{opt}$ than singular control.}
+\label{fig::simul}
+\end{figure*}
+
+Application of the bang-singular control strategy presupposes that the system has perfect knowledge of each parameter and the state of each variable.
+From a biological point of view, we can assume that the parameters characterizing the internal functioning of the cell have been optimized by evolution.
+But in order to apply the strategy described in \eqref{optstrat}, the system additionally needs knowledge of $r_{opt}$ and $r(t)$.
+Since $r_{opt}$ depends on $e_M$, which reflects nutrient availability and other environmental parameters, bacterial cells need to be able to sense the state of the environment.
+This optimal state needs to be compared with the internal state $r(t)$, for which the cell needs specific sensing systems as well.
+We believe that by using the optimal control solution as a benchmark, we can better understand the role of individual bacterial sensing systems in bringing about the dynamic adaptation of the growth rate and the composition of the cell to abrupt changes in the environment.
+
+%\addtolength{\textheight}{-15cm}   % This command serves to balance the column lengths
+                                  % on the last page of the document manually. It shortens
+                                  % the textheight of the last page by a suitable amount.
+                                  % This command does not take effect until the next page
+                                  % so it should come on the page before the last. Make
+                                  % sure that you do not shorten the textheight too much.
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{../../Bib/zotero}
+
+\end{document}

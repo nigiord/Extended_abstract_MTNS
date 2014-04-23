@@ -1,0 +1,35 @@
+  \documentstyle[11pt,chemtex,widepage]{report}
+  \def\LATEX{\LaTeX}
+  \let\TEX = \TeX
+  \setcounter{totalnumber}{4}
+  \setcounter{topnumber}{2}
+  \setcounter{bottomnumber}{2}
+  \renewcommand{\topfraction}{.5}
+  \renewcommand{\bottomfraction}{.5}
+  \setlength{\oddsidemargin}{0cm}
+  \setlength{\textwidth}{6.5in}         %right margin is now 1in
+  \setlength{\topmargin}{0cm}
+  \setlength{\headheight}{0cm}
+  \setlength{\textheight}{8.5in}
+  \setlength{\parindent}{1cm}
+  \raggedbottom
+  \begin {document}
+  \textfont1=\tenrm
+  \initial
+\title{Typesetting Chemical Equations using \LaTeX}
+\author{}
+\date{}
+\maketitle
+ 
+\tableofcontents
+\hbadness 10001
+ \input{chap3A}
+ \input chap4
+ \input chap6A
+ \input chap6B
+ \input chap6C
+ \input chap6D
+\appendix
+ \input appdc
+ \input appdb
+\end{document}
