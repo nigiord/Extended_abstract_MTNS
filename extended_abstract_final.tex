@@ -77,7 +77,7 @@ In order to model bacterial growth and relate it to the environment and the mole
 This abstract model, built from first principles, articulates self-replication around the gene expression machinery R and the metabolic machinery M (Figure \ref{fig::selfrep}). While M converts substrate S from the environment into precursors P, R transforms these precursors into macromolecules, including the transporters and enzymes in M and the RNA polymerases and ribosomes in R.
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{../../Fig/model_dec2013_baw.pdf}
+\includegraphics[width=0.45\textwidth]{../../Fig/model_apr2014_baw.pdf}
 \caption{\textbf{Self-replicator model.} S, P, M, and R refer to substrate, precursors, metabolic machinery and gene expression machinery, respectively.
 $V_M$ and $V_R$ are reaction rates.
 $\alpha(t)$ is the gene regulation control variable.
@@ -135,7 +135,9 @@ r &= \dfrac{R}{\mathit{Vol}} &= \frac{R}{\beta (M+R)},\\
 v_M &= \dfrac{V_M}{\mathit{Vol}} &= \frac{V_M}{\beta (M+R)},\\
 v_R &= \dfrac{V_R}{\mathit{Vol}} &= \frac{V_R}{\beta (M+R)}.
 \end{eqnarray*}
-$p,r,m$ are molar concentrations, for example expressed in mole m$^{-3}$ or mole L$^{-1}$. Notice that, by definition, $0 \leq r, p \leq 1/\beta$. When expressing the growth rate in terms of the new variables, we have:
+$p,r,m$ are molar concentrations, for example expressed in mole m$^{-3}$ or mole L$^{-1}$.
+Notice that, by definition, $0 \leq r, m \leq 1/\beta$.
+When expressing the growth rate in terms of the new variables, we have:
 \[
 \mu = \frac{V_2}{R+M} = \beta v_R.
 \]
@@ -182,8 +184,10 @@ The optimization problem can then be stated as follows:
 \begin{equation}\label{Prob}
 \max_{\alpha \in \mathcal{U}} J(\alpha):=\int_0^{+\infty} \mu(p, r, \alpha, t) dt,
 \end{equation}
-where $J(\alpha)$ represents the biomass (or total population volume) produced for a given control $\alpha\in \mathcal{U}$.
-Note that since the integral in $J(\alpha)$ diverges, we slightly adapt the maximisation criterion to the criterion described in \cite{halkin_necessary_1974}. This allows the application of Pontryagin maximum principle as in finite horizon optimal control problems.
+where $J(\alpha)$ represents the biomass (or total population volume) produced for a given control $\alpha \in \mathcal{U}$.
+Note that since the integral in $J(\alpha)$ diverges, we actually consider "overtaking optimality":
+a trajectory is overtaking optimal if the performance index catches up to the performance index of any other trajectory (see Definition 1.2(ii) in \cite{carlson1991} for a rigorous mathematical definition).
+This allows the application of the Infinite Horizon Maximum Principle. 
 
 Preliminary results, based on a quasi-steady-state assumption for the model \eqref{eq:p}-\eqref{eq:r}, indicate that the optimal strategy minimizes the time spent far from $\mu_{opt}$ by producing the limiting component.
 For example, if the system has too much metabolic machinery $M$ and not enough gene expression machinery $R$ to sustain maximal growth ($r < r_{opt}$), $\alpha$ is maximized so as to produce only $R$ until $r = r_{opt}$.
@@ -217,7 +221,7 @@ We believe that by using the optimal control solution as a benchmark, we can bet
 
 
 \bibliographystyle{IEEEtran}
-\bibliography{../../Bib/zotero}
+\bibliography{./extended_abstract.bib}
 
 \end{document}
 
