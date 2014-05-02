@@ -1,4 +1,4 @@
-\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
+\documentclass[letter, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
 \IEEEoverridecommandlockouts                              % This command is only needed if 
                                                           % you want to use the \thanks command
 \overrideIEEEmargins                                      % Needed to meet printer requirements.
@@ -6,8 +6,8 @@
 % on the last page of the document
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[a4paper]{geometry}
-\geometry{top=44mm, bottom=20mm, left=20mm, right=14mm}
+\usepackage{geometry}
+\geometry{top=26mm, bottom=20mm, left=20mm, right=20mm}
 \usepackage[pdftex]{graphicx}
 
 \usepackage{amsfonts}
@@ -139,7 +139,7 @@ $p,r,m$ are molar concentrations, for example expressed in mole m$^{-3}$ or mole
 Notice that, by definition, $0 \leq r, m \leq 1/\beta$.
 When expressing the growth rate in terms of the new variables, we have:
 \[
-\mu = \frac{V_2}{R+M} = \beta v_R.
+\mu = \frac{V_R}{R+M} = \beta v_R.
 \]
 The systems now writes:
 \begin{eqnarray}
@@ -166,7 +166,7 @@ In other words, what is the best strategy if, starting from values of $p$ and $r
 
 \begin{figure*}[htpb]
 \centering
-\includegraphics[trim=0 10 0 10,clip,width=0.99\textwidth]{../../Fig/MTNS2014_bangsingularcontrol.pdf}
+\includegraphics[trim=0 10 0 10,clip,width=0.95\textwidth]{../../Fig/MTNS2014_bangsingularcontrol.pdf}
 \caption{\textbf{Bang-singular versus singular control strategies.}
 Bang-singular control drives the gene expression machinery abundance $r$ faster to the optimal value $r_{opt}$ than singular control.
 }
