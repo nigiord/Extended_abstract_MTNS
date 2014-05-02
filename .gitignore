@@ -1,3 +1,6 @@
+# texmaker
+*.bak
+
 # gitignore for lateX project
 *.aux
 *.glo
